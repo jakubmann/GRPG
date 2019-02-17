@@ -175,10 +175,11 @@ commands_complex = {
 	"inspect" : inspect
 }
 
-
+#objekty
 leaf = Item("Leaf", "A leaf you would find in a forest. Nothing much special about it.", 0.1, 0.01)
 anvil = Item("Anvil", "It's pretty fucking heavy.", 25, 10)
 potion = Potion("Potion", "potion", 0, 0, 0)
+
 
 #game loop
 clear()
