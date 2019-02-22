@@ -9,7 +9,7 @@ from tilemap import *
 
 #system
 def clear():
-	os.system('clear')
+	os.system("clear")
 
 
 def show_help():
@@ -50,6 +50,10 @@ inventory_currentweight = 0
 player_xpos = 1
 player_ypos = 1
 
+equipped = {
+	"weapon": ""
+}
+
 #inventory
 def show_inventory():
 	print("Inventory\n=====")
@@ -78,7 +82,7 @@ def remove_item(item):
 
 #player functions
 def stats():
-	print("{}\n=====\nHealth: {}\nStrength: {}\nArmour: {}\nKarma: {}\nGold: {}\n".format(name, health, atk, arm, karma, gold))
+	print("{}\n=====\nHealth: {}\nStrength: {}\nArmour: {}\nKarma: {}\nGold: {}\nEquipped: {}\n".format(name, health, atk, arm, karma, gold, equipped["weapon"]))
 
 def say(word):
 	print("You said {}".format(word))
@@ -160,6 +164,29 @@ def get_input():
 	else:
 		print("You must enter a command.")
 
+def equip(item_name):
+	if item_name in Item.objects:
+		if Item.objects[item_name] in inventory:
+			if type(Item.objects[item_name]) is Weapon:
+				equipped["weapon"] = item_name
+				print("Equipped {}".format(item_name))
+		else:
+			print("You don't have a {}".format(item_name))
+	else:
+		print("{} is not an Item.".format(item_name))
+
+def dequip(item_name):
+	if item_name in Item.objects:
+		if Item.objects[item_name] in inventory:
+			if type(Item.objects[item_name]) is Weapon:
+				equipped["weapon"] = ""
+				print("Unequipped {}".format(item_name))
+		else:
+			print("You don't have a {}".format(item_name))
+	else:
+		print("{} is not an Item.".format(item_name))
+
+
 commands_simple = {
 	"help" : show_help,
 	"map" : show_map,
@@ -172,18 +199,21 @@ commands_complex = {
 	"say" : say,
 	"go" : go,
 	"drop" : drop,
-	"inspect" : inspect
+	"inspect" : inspect,
+	"equip" : equip,
+	"dequip": dequip
 }
 
 #objekty
 leaf = Item("Leaf", "A leaf you would find in a forest. Nothing much special about it.", 0.1, 0.01)
 anvil = Item("Anvil", "It's pretty fucking heavy.", 25, 10)
 potion = Potion("Potion", "potion", 0, 0, 0)
+sword = Weapon("Sword", "A short sword", 10, 1, 5)
 
 
 #game loop
 clear()
-add_item(anvil)
+add_item(sword)
 while True:
 
 	try:

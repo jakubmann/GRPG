@@ -5,7 +5,7 @@ class Item:
 		self.description = description
 		self.value = value
 		self.weight = weight
-		Item.objects[self.name] = self	
+		Item.objects[self.name] = self
 
 	def get_info(self):
 		print("{}\n=====\n{}\nValue: {}\nWeight: {}\n".format(self.name, self.description, self.value, self.weight))
@@ -18,6 +18,8 @@ class Weapon(Item):
 		self.weight = weight
 		Item.objects[self.name] = self
 		self.atk = atk
+	def get_info(self):
+		print("{}\n=====\n{}\nValue: {}\nWeight: {}\nAtk: {}\n".format(self.name, self.description, self.value, self.weight, self.atk))
 
 class Armour(Item):
 	def __init__(self, name, description, value, weight, arm):
